@@ -1,0 +1,28 @@
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-green-50 text-green-500 font-medium rounded-lg fixed" id="notice"><%= notice %></p>
+<% end %>
+
+<div class="mx-auto w-[60ch] flex flex-col space-y-12">
+  <div class="flex justify-between items-center">
+    <h1 class="font-bold text-4xl">Todos</h1>
+  </div>
+
+  <div id="todos" class="min-w-full flex flex-col space-y-8">
+    <%= render @todos.order(created_at: :desc).limit(10) %>
+  </div>
+
+  <%= form_with(model: @todo, class: "") do |form| %>
+    <div class="flex flex-row items-center space-x-8">
+      <%= form.text_field :todo, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 w-full" %>
+      <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>      
+    </div>
+
+    <% if @todo.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+        <% @todo.errors.each do |error| %>
+          <div><%= error.full_message %></div>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
